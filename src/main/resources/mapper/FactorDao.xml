@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.FactorDao">
+
+    <resultMap type="com.bright.entity.ExternalFactor" id="FactorMap">
+        <result property="factorId" column="factor_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectFactorByMatchId" parameterType="int" resultMap="FactorMap">
+        SELECT
+	    ef.factor_id,
+	    ef.content,
+	    ef.is_del
+        FROM
+	    `external_factor` ef
+	    LEFT JOIN match_factor mf ON ef.factor_id =mf.factor_id
+	    WHERE
+	    mf.match_id = #{matchId}
+	    and
+	    mf.is_del =0
+	    and
+	    ef.is_del =0
+    </select>
+
+    <insert id="saveFactor" parameterType="com.bright.entity.ExternalFactor" useGeneratedKeys="true"
+            keyColumn="factor_id" keyProperty="factorId">
+        insert into external_factor(
+	    content,
+	    is_del)
+	    values (#{externalFactor.content},0)
+    </insert>
+
+    <update id="updateFactor" parameterType="com.bright.entity.ExternalFactor" >
+        update external_factor
+        set
+        content =#{content}
+        where
+        factor_id =#{factorId}
+    </update>
+
+    <select id="selectAll" resultMap="FactorMap">
+        SELECT
+	    factor_id,
+	    content,
+	    is_del
+        FROM
+	    `external_factor`
+	    where
+	    is_del =0
+    </select>
+</mapper>
+

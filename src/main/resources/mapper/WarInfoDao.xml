@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.WarInfoDao">
+
+    <resultMap type="com.bright.entity.WarInfo" id="WarInfoMap">
+        <result property="warId" column="war_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="holdTime" column="hold_time" jdbcType="VARCHAR"/>
+        <result property="holdCountry" column="hold_country" jdbcType="VARCHAR"/>
+        <result property="continent" column="continent" jdbcType="VARCHAR"/>
+        <result property="duration" column="duration" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="saveWar" parameterType="com.bright.entity.WarInfo" keyProperty="warId" keyColumn="war_id"
+            useGeneratedKeys="true">
+        insert into war_info(name, hold_time, hold_country, continent, duration, create_time, update_time, create_user, update_user, is_del)
+        values (#{name}, #{holdTime},#{holdCountry},#{continent},#{duration},now(),null,#{createUser},#{updateUser},0)
+    </insert>
+
+    <update id="updateWar" parameterType="com.bright.entity.WarInfo">
+        update
+        war_info
+        <set>
+            <if test="null != name and '' !=name">
+                name =#{name}
+            </if>
+            <if test="null != holdTime and '' !=holdTime">
+                hold_time =#{holdTime}
+            </if>
+            <if test="null != holdCountry and '' !=holdCountry">
+                hold_country =#{holdCountry}
+            </if>
+            <if test="null != continent and '' !=continent">
+                continent =#{continent}
+            </if>
+            <if test="null != duration and '' !=duration">
+                duration =#{duration}
+            </if>
+        </set>
+        where
+        war_id =#{warId}
+    </update>
+
+    <select id="selectAll" resultMap="WarInfoMap">
+        select
+        war_id, name
+        , hold_time, hold_country, continent, duration, is_del
+        from
+        war_info
+        where
+        is_del =0
+    </select>
+</mapper>
+

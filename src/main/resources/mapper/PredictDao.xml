@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.PredictDao">
+
+    <resultMap type="com.bright.entity.Predict" id="PredictMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="winRate" column="win_rate" jdbcType="DOUBLE"/>
+        <result property="loseRate" column="lose_rate" jdbcType="DOUBLE"/>
+        <result property="drawRate" column="draw_rate" jdbcType="DOUBLE"/>
+        <result property="matchId" column="match_id" jdbcType="INTEGER"/>
+        <result property="teamOne" column="team_one" jdbcType="VARCHAR"/>
+        <result property="teamTwo" column="team_two" jdbcType="VARCHAR"/>
+        <result property="support" column="support" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <insert id="savePredict" parameterType="com.bright.entity.Predict" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+        insert into predict(
+        win_rate,
+        lose_rate,
+        draw_rate,
+        match_id,
+        team_one,
+        team_two,
+        support,
+        create_time,
+        is_del)
+	    values (
+	    #{winRate},
+        #{loseRate},
+        #{drawRate},
+        #{matchId},
+        #{teamOne},
+        #{teamTwo},
+        #{support},
+        now(),
+        0
+	    )
+    </insert>
+
+    <update id="updatePredict" parameterType="com.bright.entity.Predict" >
+        update predict
+        <set>
+            <if test="null != winRate">
+                win_rate =#{winRate}
+            </if>
+            <if test="null != loseRate">
+                lose_rate =#{loseRate}
+            </if>
+            <if test="null != drawRate">
+                draw_rate =#{drawRate}
+            </if>
+            <if test="null != matchId">
+                match_id =#{matchId}
+            </if>
+            <if test="null != teamOne and ''!=teamOne">
+                team_one =#{teamOne}
+            </if>
+            <if test="null != teamTwo and ''!=teamTwo">
+                team_two =#{teamTwo}
+            </if>
+            <if test="null != support and ''!=support">
+                support =#{support}
+            </if>
+        </set>
+        where
+        id =#{id}
+    </update>
+
+    <select id="selectAll" resultMap="PredictMap">
+        SELECT
+	    id,
+	    win_rate,
+        lose_rate,
+        draw_rate,
+        match_id,
+        team_one,
+        team_two,
+        support,
+        create_time,
+        is_del
+        FROM
+	    `predict`
+	    where
+	    is_del =0
+    </select>
+</mapper>
+

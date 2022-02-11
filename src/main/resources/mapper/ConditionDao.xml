@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.ConditionDao">
+
+    <resultMap type="com.bright.entity.Condition" id="ConditionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="weather" column="weather" jdbcType="VARCHAR"/>
+        <result property="temperature" column="temperature" jdbcType="VARCHAR"/>
+        <result property="humidity" column="humidity" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ConditionMap">
+        select
+          id, weather, temperature, humidity, create_time, update_time, is_del
+        from condition
+        where id = #{id}
+    </select>
+
+<!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+<!--    <select id="queryAllByLimit" resultMap="ConditionMap">-->
+<!--        select-->
+<!--          id, weather, temperature, humidity, create_time, update_time, is_del-->
+<!--        from condition-->
+<!--        <where>-->
+<!--            <if test="id != null">-->
+<!--                and id = #{id}-->
+<!--            </if>-->
+<!--            <if test="weather != null and weather != ''">-->
+<!--                and weather = #{weather}-->
+<!--            </if>-->
+<!--            <if test="temperature != null and temperature != ''">-->
+<!--                and temperature = #{temperature}-->
+<!--            </if>-->
+<!--            <if test="humidity != null and humidity != ''">-->
+<!--                and humidity = #{humidity}-->
+<!--            </if>-->
+<!--            <if test="createTime != null">-->
+<!--                and create_time = #{createTime}-->
+<!--            </if>-->
+<!--            <if test="updateTime != null">-->
+<!--                and update_time = #{updateTime}-->
+<!--            </if>-->
+<!--            <if test="isDel != null">-->
+<!--                and is_del = #{isDel}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{pageable.offset}, #{pageable.pageSize}-->
+<!--    </select>-->
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from condition
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="weather != null and weather != ''">
+                and weather = #{weather}
+            </if>
+            <if test="temperature != null and temperature != ''">
+                and temperature = #{temperature}
+            </if>
+            <if test="humidity != null and humidity != ''">
+                and humidity = #{humidity}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="isDel != null">
+                and is_del = #{isDel}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into condition(weather, temperature, humidity, create_time, update_time, is_del)
+        values (#{weather}, #{temperature}, #{humidity}, #{createTime}, #{updateTime}, #{isDel})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into condition(weather, temperature, humidity, create_time, update_time, is_del)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.weather}, #{entity.temperature}, #{entity.humidity}, #{entity.createTime}, #{entity.updateTime}, #{entity.isDel})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into condition(weather, temperature, humidity, create_time, update_time, is_del)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.weather}, #{entity.temperature}, #{entity.humidity}, #{entity.createTime}, #{entity.updateTime}, #{entity.isDel})
+        </foreach>
+        on duplicate key update
+        weather = values(weather),
+        temperature = values(temperature),
+        humidity = values(humidity),
+        create_time = values(create_time),
+        update_time = values(update_time),
+        is_del = values(is_del)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update condition
+        <set>
+            <if test="weather != null and weather != ''">
+                weather = #{weather},
+            </if>
+            <if test="temperature != null and temperature != ''">
+                temperature = #{temperature},
+            </if>
+            <if test="humidity != null and humidity != ''">
+                humidity = #{humidity},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from condition where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="ConditionMap">
+        select
+        id,
+        weather, temperature, humidity, create_time, update_time, is_del
+        from
+        condition
+        where
+        is_del =0
+    </select>
+
+    <select id="selectByMatchId" parameterType="int" resultMap="ConditionMap">
+        select  c.id,
+        c.weather, c.temperature, c.humidity, c.create_time, c.update_time, c.is_del
+		FROM
+		`condition` c
+		LEFT JOIN match_condition mc on c.id= mc.condition_id
+		where
+		mc.match_id =#{matchId}
+		and
+		mc.is_del =0
+		and
+		c.is_del =0
+    </select>
+
+</mapper>
+

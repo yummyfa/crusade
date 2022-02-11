@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.RealTimeInfoDao">
+
+    <resultMap type="com.bright.entity.RealTimeInfo" id="RealTimeInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="isConcede" column="is_concede" jdbcType="INTEGER"/>
+        <result property="concedeCount" column="concede_count" jdbcType="INTEGER"/>
+        <result property="companyId" column="company_id" jdbcType="INTEGER"/>
+        <result property="winOdds" column="win_odds" jdbcType="VARCHAR"/>
+        <result property="loseOdds" column="lose_odds" jdbcType="VARCHAR"/>
+        <result property="drawOdds" column="draw_odds" jdbcType="VARCHAR"/>
+        <result property="matchId" column="match_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--新增所有列-->
+    <insert id="saveInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into real_time_info(
+        id, is_concede, concede_count, company_id, win_odds, lose_odds, draw_odds,match_id,create_time,create_user,is_del)
+        values (
+        #{id},
+        #{is_concede},
+        #{concede_count},
+        #{company_id},
+        #{win_odds},
+        #{lose_odds},
+        #{draw_odds},
+        #{match_id},
+        #{create_time},
+        #{create_user},
+        #{is_del}
+        )
+    </insert>
+
+    <update id="updateInfo" parameterType="com.bright.entity.RealTimeInfo" >
+        update
+        real_time_info
+        <set>
+            <if test="null!=isConcede">
+                is_concede =#{isConcede},
+            </if>
+            <if test="null != concedeCount">
+                concede_count=#{concedeCount},
+            </if>
+            <if test="null != companyId">
+                company_id =#{companyId},
+            </if>
+            <if test="null != winOdds and '' !=winOdds">
+                win_odds =#{winOdds},
+            </if>
+            <if test="null != loseOdds and '' !=loseOdds">
+                lose_odds =#{loseOdds},
+            </if>
+            <if test="null != drawOdds and '' !=drawOdds">
+                draw_odds =#{drawOdds},
+            </if>
+            is_del =0
+        </set>
+        where
+        id=#{id}
+        and
+        is_del =0
+
+    </update>
+
+    <select id="selectByMatchId" parameterType="int" resultMap="RealTimeInfoMap">
+        select
+        id, is_concede, concede_count, company_id, win_odds, lose_odds, draw_odds,match_id,create_time,create_user,is_del
+        from
+        real_time_info
+        where
+        match_id =#{matchId}
+        and
+        is_del =0
+    </select>
+
+    <select id="selectAll" resultMap="RealTimeInfoMap">
+        select
+        id, is_concede, concede_count, company_id, win_odds, lose_odds, draw_odds,match_id,create_time,create_user,is_del
+        from
+        real_time_info
+        where
+        is_del =0
+    </select>
+</mapper>
+
