@@ -6,6 +6,7 @@ import com.bright.entity.ResultTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,11 +48,11 @@ public class CaptureController {
     @ApiOperation("获取实时信息")
     public ResultEntity<Boolean> getData() {
         try {
-            Document doc = Jsoup.connect("https://trade.500.com/jczq/").get();
+                Document doc = Jsoup.connect("https://trade.500.com/jczq/").get();
             Elements elementsByClass = doc.getElementsByClass("bet-tb-tr");
             int count = elementsByClass.size();
             // 判断是否是五大联赛、欧洲杯、欧冠、世界杯
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < 10; i++) {
                 Elements elementsByClass1 = elementsByClass.get(i).getElementsByClass("td-evt");
                 String s = elementsByClass1.toString().replaceAll("\"", "");
                 int i1 = s.indexOf(">");
@@ -101,13 +102,25 @@ public class CaptureController {
 
     @GetMapping("/forTest")
     @ApiOperation("测试")
-    public ResultEntity<Boolean> test1() {
+    public static ResultEntity<Boolean> test1() {
         try {
-            Document doc = Jsoup.connect("https://www.csdn.net/").get();
-            Elements elementsByClass = doc.getElementsByClass("headswiper-item");
-            Elements strong = elementsByClass.get(1).getElementsByTag("strong");
-            String s = strong.toString();
-            int strong1 = s.indexOf("strong");
+            Document doc = Jsoup.connect("https://saishi.zgzcw.com/soccer").get();
+            Elements elementsByClass = doc.getElementsByClass("rmls-nr");
+            Elements allElements = elementsByClass.get(0).getAllElements();
+            String url = null;
+            for (int i = 2; i < allElements.size(); i++) {
+                String s = allElements.get(i).toString().replace("\"", "");
+                if (s.contains("欧冠")){
+                    String s1 = s.substring(s.indexOf("http"));
+                    int number = s1.indexOf(">");
+                    url = s1.substring(0,number);
+                    break;
+                }
+            }
+            if (StringUtils.isNotEmpty(url)){
+                Document doc1 = Jsoup.connect(url).get();
+
+            }
 
         } catch (Exception e) {
             logger.error("出现了错误，{}", e.toString());
@@ -125,4 +138,8 @@ public class CaptureController {
         return false;
     }
 
+
+    public static void main(String[] args) {
+        test1();
+    }
 }
