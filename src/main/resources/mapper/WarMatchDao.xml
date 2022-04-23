@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.WarMatchDao">
+
+    <resultMap type="com.bright.entity.WarMatch" id="WarMatchMap">
+        <result property="warId" column="war_id" jdbcType="INTEGER"/>
+        <result property="matchId" column="match_id" jdbcType="INTEGER"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="WarMatchMap">
+        select
+          war_id, match_id, is_del
+        from war_match
+        where war_id = #{warId}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="warId" useGeneratedKeys="true">
+        insert into war_match(match_id, is_del)
+        values (#{matchId}, #{isDel})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="warId" useGeneratedKeys="true">
+        insert into war_match(war_id, match_id, is_del)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.warId}, #{entity.matchId}, #{entity.isDel})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="warId" useGeneratedKeys="true">
+        insert into war_match(match_id, is_del)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.matchId}, #{entity.isDel})
+        </foreach>
+        on duplicate key update
+        match_id = values(match_id),
+        is_del = values(is_del)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update war_match
+        <set>
+            <if test="matchId != null">
+                match_id = #{matchId},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+        </set>
+        where war_id = #{warId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from war_match where war_id = #{warId}
+    </delete>
+
+</mapper>
+

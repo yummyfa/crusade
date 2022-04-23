@@ -31,4 +31,9 @@ public class WarInfoServiceImpl implements WarInfoService {
     public List<WarInfo> selectAll() {
         return warInfoDao.selectAll();
     }
+
+    @Override
+    public WarInfo getWarInfoByName(String warName) {
+        return warInfoDao.getWarInfoByName(warName);
+    }
 }

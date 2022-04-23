@@ -24,4 +24,9 @@ public interface MatchDao {
     boolean entryCondition(@Param("matchId") Integer matchId,@Param("conditionId") Integer conditionId);
 
     boolean entryFactor(EntryFactorReq entryFactorReq);
+
+    /**
+     * 批量插入
+     */
+    boolean batchInsert(@Param("matches") List<Match> matches);
 }

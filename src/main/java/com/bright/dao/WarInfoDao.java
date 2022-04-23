@@ -20,4 +20,6 @@ public interface WarInfoDao {
     boolean updateWar(WarInfo warInfo);
 
     List<WarInfo> selectAll();
+
+    WarInfo getWarInfoByName(String warName);
 }

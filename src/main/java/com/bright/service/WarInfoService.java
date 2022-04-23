@@ -15,4 +15,7 @@ public interface WarInfoService {
     boolean updateWar(WarInfo warInfo);
 
     List<WarInfo> selectAll();
+
+    WarInfo getWarInfoByName(String warName);
+
 }

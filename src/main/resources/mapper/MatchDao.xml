@@ -12,6 +12,9 @@
         <result property="headCoachTwo" column="head_coach_two" jdbcType="VARCHAR"/>
         <result property="ninetyMinuteResults" column="ninety_minute_results" jdbcType="VARCHAR"/>
         <result property="finallyResults" column="finally_results" jdbcType="VARCHAR"/>
+        <result property="warName" column="war_name" jdbcType="VARCHAR"/>
+        <result property="bjTime" column="bj_time" jdbcType="VARCHAR"/>
+        <result property="localTime" column="local_time" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
@@ -31,6 +34,8 @@
         head_coach_two,
         ninety_minute_results,
         finally_results,
+        bj_time,
+        local_time,
         create_time,
         update_time,
         create_user,
@@ -45,6 +50,8 @@
         #{headCoachTwo},
         #{ninetyMinuteResults},
         #{finallyResults},
+        #{bj_time},
+        #{local_time},
         now(),
         #{updateTime},
         #{createUser},
@@ -120,5 +127,47 @@
         insert into match_factor(match_id,factor_id,create_time,update_time,is_del)
         values (#{matchId},#{factorId},now(),null,0)
     </insert>
+
+    <!--    批量插入-->
+    <insert id="batchInsert" parameterType="com.bright.entity.Match"  useGeneratedKeys="true"
+            keyColumn="match_id" keyProperty="matchId">
+        insert into `match`(
+        nation_one,
+        players_one,
+        head_coach_one,
+        nation_two,
+        players_two,
+        head_coach_two,
+        ninety_minute_results,
+        finally_results,
+        war_name,
+        bj_time,
+        local_time,
+        create_time,
+        update_time,
+        create_user,
+        update_user,
+        is_del)
+        values
+        <foreach collection="matches" item="match" index="index" separator=",">
+            (#{match.nationOne},
+            #{match.playersOne},
+            #{match.headCoachOne},
+            #{match.nationTwo},
+            #{match.playersTwo},
+            #{match.headCoachTwo},
+            #{match.ninetyMinuteResults},
+            #{match.finallyResults},
+            #{match.warName},
+            #{match.bjTime},
+            #{match.localTime},
+            now(),
+            #{match.updateTime},
+            #{match.createUser},
+            #{match.updateUser},
+            0)
+        </foreach>
+    </insert>
+
 </mapper>
 

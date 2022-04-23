@@ -9,7 +9,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.3.RELEASE</version>
     </parent>
-    
+
     <groupId>com.bright</groupId>
     <artifactId>com.bright</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -124,6 +124,18 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.17</version>
         </dependency>
+<!--        -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -135,6 +147,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
+                    <include>**/*.txt</include>
                 </includes>
             </resource>
         </resources>

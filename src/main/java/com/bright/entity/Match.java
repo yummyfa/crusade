@@ -16,6 +16,9 @@ public class Match {
     @ApiModelProperty(value = "比赛id")
     private Integer matchId;
 
+    @ApiModelProperty(value = "大赛名称")
+    private String warName;
+
     private String nationOne;
 
     private String playersOne;
@@ -31,6 +34,16 @@ public class Match {
     private String ninetyMinuteResults;
 
     private String finallyResults;
+
+    /**
+     * 北京时间
+     */
+    private String bjTime;
+
+    /**
+     * 当地时间
+     */
+    private String localTime;
 
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -49,8 +62,9 @@ public class Match {
     @ApiModelProperty(value = "是否删除 0 normal ，1 deleted")
     private Integer isDel;
 
-    public Match(Integer matchId, String nationOne, String playersOne, String headCoachOne, String nationTwo, String playersTwo, String headCoachTwo, String ninetyMinuteResults, String finallyResults, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
+    public Match(Integer matchId, String warName, String nationOne, String playersOne, String headCoachOne, String nationTwo, String playersTwo, String headCoachTwo, String ninetyMinuteResults, String finallyResults, String bjTime, String localTime, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
         this.matchId = matchId;
+        this.warName = warName;
         this.nationOne = nationOne;
         this.playersOne = playersOne;
         this.headCoachOne = headCoachOne;
@@ -59,6 +73,8 @@ public class Match {
         this.headCoachTwo = headCoachTwo;
         this.ninetyMinuteResults = ninetyMinuteResults;
         this.finallyResults = finallyResults;
+        this.bjTime = bjTime;
+        this.localTime = localTime;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.createUser = createUser;
@@ -67,6 +83,14 @@ public class Match {
     }
 
     public Match() {
+    }
+
+    public String getWarName() {
+        return warName;
+    }
+
+    public void setWarName(String warName) {
+        this.warName = warName;
     }
 
     public String getHeadCoachTwo() {
@@ -181,17 +205,37 @@ public class Match {
         this.isDel = isDel;
     }
 
+    public String getBjTime() {
+        return bjTime;
+    }
+
+    public void setBjTime(String bjTime) {
+        this.bjTime = bjTime;
+    }
+
+    public String getLocalTime() {
+        return localTime;
+    }
+
+    public void setLocalTime(String localTime) {
+        this.localTime = localTime;
+    }
+
     @Override
     public String toString() {
         return "Match{" +
                 "matchId=" + matchId +
+                ", warName='" + warName + '\'' +
                 ", nationOne='" + nationOne + '\'' +
                 ", playersOne='" + playersOne + '\'' +
                 ", headCoachOne='" + headCoachOne + '\'' +
                 ", nationTwo='" + nationTwo + '\'' +
                 ", playersTwo='" + playersTwo + '\'' +
+                ", headCoachTwo='" + headCoachTwo + '\'' +
                 ", ninetyMinuteResults='" + ninetyMinuteResults + '\'' +
                 ", finallyResults='" + finallyResults + '\'' +
+                ", bjTime='" + bjTime + '\'' +
+                ", localTime='" + localTime + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", createUser='" + createUser + '\'' +

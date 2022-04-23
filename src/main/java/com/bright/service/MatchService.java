@@ -1,6 +1,7 @@
 package com.bright.service;
 
 import com.bright.entity.Match;
+import com.bright.entity.ResultEntity;
 import com.bright.req.EntryConditionDto;
 import com.bright.req.EntryFactorReq;
 
@@ -36,4 +37,9 @@ public interface MatchService {
      * 录入因素
      */
     boolean entryFactor(EntryFactorReq entryFactorReq);
+
+    /**
+     * 批量插入
+     */
+    boolean batchInsert(List<Match> matches);
 }

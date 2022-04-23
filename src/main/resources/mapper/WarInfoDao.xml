@@ -53,5 +53,15 @@
         where
         is_del =0
     </select>
+
+    <select id="getWarInfoByName" resultType="com.bright.entity.WarInfo">
+        select
+        war_id, name, hold_time, hold_country, continent, duration, is_del
+        from
+        war_info
+        where
+        `name` like concat(concat('%',#{name}),'%')
+        is_del =0
+    </select>
 </mapper>
 

@@ -55,4 +55,13 @@ public class WarInfoController {
     public ResultEntity<List<WarInfo>> selectAll(){
         return ResultTemplate.successData(warInfoService.selectAll(),"查询成功");
     }
+
+    /**
+     * 根据名字查询信息
+     */
+    @GetMapping("/getWarInfoByName")
+    @ApiOperation("根据名字查询信息")
+    public ResultEntity<WarInfo> getWarInfoByName(String warName){
+        return ResultTemplate.successData(warInfoService.getWarInfoByName(warName),"查询成功");
+    }
 }

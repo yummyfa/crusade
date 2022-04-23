@@ -82,4 +82,12 @@ public class MatchServiceImpl implements MatchService {
     public boolean entryFactor(EntryFactorReq entryFactorReq) {
         return matchDao.entryFactor(entryFactorReq);
     }
+
+    /**
+     * 批量插入
+     */
+    @Override
+    public boolean batchInsert(List<Match> matches) {
+        return matchDao.batchInsert(matches);
+    }
 }

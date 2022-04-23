@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bright.dao.SysLogDao">
+
+    <insert id="insert">
+        INSERT INTO system_log(
+            app_id,
+            server_name,
+            req_path,
+            req_params,
+            req_type,
+            start_time,
+            end_time,
+            is_success,
+            req_desc,
+            ip_address,
+            create_time,
+            create_user,
+            user_nick,
+            update_time,
+            update_user,
+            is_del
+        )
+        VALUES(
+            #{appId},
+            #{serverName},
+            #{reqPath},
+            #{reqParams},
+            #{reqType},
+            #{startTime},
+            #{endTime},
+            #{isSuccess},
+            #{reqDesc},
+            #{ipAddress},
+            NOW(),
+            #{createUser},
+            #{userNick},
+            NOW(),
+            #{updateUser},
+            0
+        )
+    </insert>
+</mapper>
+
