@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -47,5 +48,18 @@ public class BarrierTest {
                 break;
             }
         }
+    }
+
+    @Test
+    void get(){
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("1");
+        objects.add("2");
+        objects.remove("1");
+        System.out.println(objects);
+    }
+
+    private static synchronized void get1(){
+
     }
 }
