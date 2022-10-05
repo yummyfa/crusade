@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
@@ -71,8 +68,8 @@ public class FileTest {
     public void sendFile() {
         try {
             long l = System.currentTimeMillis();
-            FileChannel readChannel = FileChannel.open(Paths.get("D:\\05.xmind\\xmind\\xmind-8-update7-windows.exe"), StandardOpenOption.READ);
-            FileChannel writeChannel = FileChannel.open(Paths.get("C:\\Users\\888\\Desktop\\xmind-8-update7-windows.exe"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+            FileChannel readChannel = FileChannel.open(Paths.get("C:\\software\\jdk-8u241-windows-x64.exe"), StandardOpenOption.READ);
+            FileChannel writeChannel = FileChannel.open(Paths.get("C:\\software\\history\\jdk-8u241-windows-x64.exe"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
             long size = readChannel.size();
             long position = readChannel.position();
             readChannel.transferTo(position,size, writeChannel);
@@ -82,6 +79,33 @@ public class FileTest {
             System.out.println(l1-l);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void sendFile1() throws IOException {
+        FileInputStream fis=null;
+        FileOutputStream fos=null;
+        try {
+            long l = System.currentTimeMillis();
+            fis =new FileInputStream("C:\\software\\jdk-8u241-windows-x64.exe");
+            fos=new FileOutputStream("C:\\software\\history\\jdk-8u241-windows-x64.exe");
+            byte[] bytes = new byte[1024 * 1024];//1MB
+            int readCount=0;
+            while((readCount=fis.read(bytes))!=-1){
+                fos.write(bytes,0,readCount);
+            }
+            fos.flush();
+            long l1 = System.currentTimeMillis();
+            System.out.println(l1-l);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            fis.close();
+            fos.close();
         }
     }
 }

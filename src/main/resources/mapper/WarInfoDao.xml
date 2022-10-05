@@ -12,6 +12,7 @@
         <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
         <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
         <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
     </resultMap>
 
     <insert id="saveWar" parameterType="com.bright.entity.WarInfo" keyProperty="warId" keyColumn="war_id"
@@ -54,14 +55,14 @@
         is_del =0
     </select>
 
-    <select id="getWarInfoByName" resultType="com.bright.entity.WarInfo">
+    <select id="getWarInfoByName" resultMap="WarInfoMap">
         select
-        war_id, name, hold_time, hold_country, continent, duration, is_del
+        war_id, name, hold_time, hold_country, continent, duration, is_del, url
         from
         war_info
         where
         `name` like concat(concat('%',#{name}),'%')
-        is_del =0
+        and is_del =0
     </select>
 </mapper>
 

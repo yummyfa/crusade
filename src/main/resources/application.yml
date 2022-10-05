@@ -33,3 +33,5 @@ swagger2:
   enable: true
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+football:
+  url: https://www.zgzcw.com/

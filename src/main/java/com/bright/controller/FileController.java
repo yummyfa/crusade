@@ -23,14 +23,18 @@ public class FileController {
 
     public static void main(String[] args) {
         try {
+            long l = System.currentTimeMillis();
+            System.out.println();
             // 获取文件
-            FileChannel readChannel = FileChannel.open(Paths.get("C:\\Users\\888\\Desktop\\Snipaste_2022-08-26_22-53-35.png"), StandardOpenOption.READ);
+            FileChannel readChannel = FileChannel.open(Paths.get("C:\\software\\ideaIU-2020.1.exe"), StandardOpenOption.READ);
             MappedByteBuffer data = readChannel.map(FileChannel.MapMode.READ_ONLY, 0, readChannel.size());
-            FileChannel writeChannel = FileChannel.open(Paths.get("C:\\Users\\888\\Desktop\\222.png"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+            FileChannel writeChannel = FileChannel.open(Paths.get("C:\\software\\history\\ideaIU-2020.1.exe"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
             //数据传输
             writeChannel.write(data);
             readChannel.close();
             writeChannel.close();
+            long d = System.currentTimeMillis();
+            System.out.println(d-l);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

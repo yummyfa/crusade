@@ -90,4 +90,9 @@ public class MatchServiceImpl implements MatchService {
     public boolean batchInsert(List<Match> matches) {
         return matchDao.batchInsert(matches);
     }
+
+    @Override
+    public Match selectByTimeAndTeam(String bjTime, String nationOne, String nationTwo) {
+        return matchDao.selectByTimeAndTeam(bjTime, nationOne, nationTwo);
+    }
 }

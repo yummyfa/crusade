@@ -28,6 +28,9 @@ public class WarInfo {
     @ApiModelProperty(value = "持续时间")
     private String duration;
 
+    @ApiModelProperty(value = "网址")
+    private String url;
+
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -45,13 +48,14 @@ public class WarInfo {
     @ApiModelProperty(value = "是否删除 0 normal ，1 deleted")
     private Integer isDel;
 
-    public WarInfo(Integer warId, String name, String holdTime, String holdCountry, String continent, String duration, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
+    public WarInfo(Integer warId, String name, String holdTime, String holdCountry, String continent, String duration, String url, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
         this.warId = warId;
         this.name = name;
         this.holdTime = holdTime;
         this.holdCountry = holdCountry;
         this.continent = continent;
         this.duration = duration;
+        this.url = url;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.createUser = createUser;
@@ -148,6 +152,14 @@ public class WarInfo {
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
 

@@ -31,9 +31,13 @@ public class Match {
 
     private String headCoachTwo;
 
-    private String ninetyMinuteResults;
+    private String halfCourt;
 
     private String finallyResults;
+
+    private String concedeCount;
+
+    private Integer warId;
 
     /**
      * 北京时间
@@ -62,7 +66,7 @@ public class Match {
     @ApiModelProperty(value = "是否删除 0 normal ，1 deleted")
     private Integer isDel;
 
-    public Match(Integer matchId, String warName, String nationOne, String playersOne, String headCoachOne, String nationTwo, String playersTwo, String headCoachTwo, String ninetyMinuteResults, String finallyResults, String bjTime, String localTime, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
+    public Match(Integer matchId, String warName, String nationOne, String playersOne, String headCoachOne, String nationTwo, String playersTwo, String headCoachTwo, String halfCourt, String finallyResults, String concedeCount, Integer warId, String bjTime, String localTime, Date createTime, Date updateTime, String createUser, String updateUser, Integer isDel) {
         this.matchId = matchId;
         this.warName = warName;
         this.nationOne = nationOne;
@@ -71,8 +75,10 @@ public class Match {
         this.nationTwo = nationTwo;
         this.playersTwo = playersTwo;
         this.headCoachTwo = headCoachTwo;
-        this.ninetyMinuteResults = ninetyMinuteResults;
+        this.halfCourt = halfCourt;
         this.finallyResults = finallyResults;
+        this.concedeCount = concedeCount;
+        this.warId = warId;
         this.bjTime = bjTime;
         this.localTime = localTime;
         this.createTime = createTime;
@@ -83,6 +89,14 @@ public class Match {
     }
 
     public Match() {
+    }
+
+    public Integer getWarId() {
+        return warId;
+    }
+
+    public void setWarId(Integer warId) {
+        this.warId = warId;
     }
 
     public String getWarName() {
@@ -149,14 +163,6 @@ public class Match {
         this.playersTwo = playersTwo;
     }
 
-    public String getNinetyMinuteResults() {
-        return ninetyMinuteResults;
-    }
-
-    public void setNinetyMinuteResults(String ninetyMinuteResults) {
-        this.ninetyMinuteResults = ninetyMinuteResults;
-    }
-
     public String getFinallyResults() {
         return finallyResults;
     }
@@ -221,6 +227,22 @@ public class Match {
         this.localTime = localTime;
     }
 
+    public String getHalfCourt() {
+        return halfCourt;
+    }
+
+    public void setHalfCourt(String halfCourt) {
+        this.halfCourt = halfCourt;
+    }
+
+    public String getConcedeCount() {
+        return concedeCount;
+    }
+
+    public void setConcedeCount(String concedeCount) {
+        this.concedeCount = concedeCount;
+    }
+
     @Override
     public String toString() {
         return "Match{" +
@@ -232,8 +254,9 @@ public class Match {
                 ", nationTwo='" + nationTwo + '\'' +
                 ", playersTwo='" + playersTwo + '\'' +
                 ", headCoachTwo='" + headCoachTwo + '\'' +
-                ", ninetyMinuteResults='" + ninetyMinuteResults + '\'' +
+                ", halfCourt='" + halfCourt + '\'' +
                 ", finallyResults='" + finallyResults + '\'' +
+                ", concedeCount=" + concedeCount +
                 ", bjTime='" + bjTime + '\'' +
                 ", localTime='" + localTime + '\'' +
                 ", createTime=" + createTime +

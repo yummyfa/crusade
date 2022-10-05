@@ -1,7 +1,6 @@
 package com.bright.service;
 
 import com.bright.entity.Match;
-import com.bright.entity.ResultEntity;
 import com.bright.req.EntryConditionDto;
 import com.bright.req.EntryFactorReq;
 
@@ -42,4 +41,13 @@ public interface MatchService {
      * 批量插入
      */
     boolean batchInsert(List<Match> matches);
+
+    /**
+     * 根据比赛时间和队伍查询
+     * @param bjTime 比赛时间
+     * @param nationOne 主队
+     * @param nationTwo 客队
+     * @return 比赛信息
+     */
+    Match selectByTimeAndTeam(String bjTime, String nationOne, String nationTwo);
 }

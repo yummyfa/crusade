@@ -10,7 +10,7 @@
         <result property="nationTwo" column="nation_two" jdbcType="VARCHAR"/>
         <result property="playersTwo" column="players_two" jdbcType="VARCHAR"/>
         <result property="headCoachTwo" column="head_coach_two" jdbcType="VARCHAR"/>
-        <result property="ninetyMinuteResults" column="ninety_minute_results" jdbcType="VARCHAR"/>
+        <result property="halfCourt" column="half_court" jdbcType="VARCHAR"/>
         <result property="finallyResults" column="finally_results" jdbcType="VARCHAR"/>
         <result property="warName" column="war_name" jdbcType="VARCHAR"/>
         <result property="bjTime" column="bj_time" jdbcType="VARCHAR"/>
@@ -20,21 +20,25 @@
         <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
         <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
         <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+        <result property="warId" column="war_id" jdbcType="INTEGER"/>
+        <result property="concedeCount" column="concede_count" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <insert id="saveMatch" parameterType="com.bright.entity.Match" useGeneratedKeys="true"
             keyColumn="match_id" keyProperty="matchId">
-        insert into match(
+        insert into `match`(
 	    nation_one,
         players_one,
         head_coach_one,
         nation_two,
         players_two,
         head_coach_two,
-        ninety_minute_results,
+        half_court,
+        concede_count,
         finally_results,
         bj_time,
+        war_id,
         local_time,
         create_time,
         update_time,
@@ -48,10 +52,12 @@
         #{nationTwo},
         #{playersTwo},
         #{headCoachTwo},
-        #{ninetyMinuteResults},
+        #{halfCourt},
+        #{concedeCount},
         #{finallyResults},
-        #{bj_time},
-        #{local_time},
+        #{bjTime},
+        #{warId},
+        #{localTime},
         now(),
         #{updateTime},
         #{createUser},
@@ -61,7 +67,7 @@
     </insert>
 
     <update id="updateMatch" parameterType="com.bright.entity.Match" >
-        update match
+        update `match`
         <set>
             <if test="null != nationOne and '' != nationOne">
                 nation_one=#{nationOne},
@@ -81,8 +87,11 @@
             <if test="null != headCoachTwo and '' != headCoachTwo">
                 head_coach_two=#{headCoachTwo},
             </if>
-            <if test="null != ninetyMinuteResults and '' != ninetyMinuteResults">
-                ninety_minute_results=#{ninetyMinuteResults},
+            <if test="null != halfCourt and '' != halfCourt">
+                half_court=#{halfCourt},
+            </if>
+            <if test="null != concedeCount and '' != concedeCount">
+                concede_count=#{concedeCount},
             </if>
             <if test="null != finallyResults and '' != finallyResults">
                 finally_results=#{finallyResults},
@@ -105,7 +114,8 @@
         nation_two,
         players_two,
         head_coach_two,
-        ninety_minute_results,
+        half_court,
+        concede_count,
         finally_results,
         create_time,
         update_time,
@@ -113,9 +123,42 @@
         update_user,
         is_del
         FROM
-	    match
+	    `match`
 	    where
 	    is_del =0
+    </select>
+    <select id="selectByTimeAndTeam" resultMap="MatchMap">
+        SELECT
+        match_id,
+	    nation_one,
+        players_one,
+        head_coach_one,
+        nation_two,
+        players_two,
+        head_coach_two,
+        half_court,
+        concede_count,
+        bj_time,
+        finally_results,
+        create_time,
+        update_time,
+        create_user,
+        update_user,
+        is_del
+        FROM
+        `match`
+        where
+        is_del = 0
+        <if test="null != bjTime and '' != bjTime">
+           and bj_time = #{bjTime}
+        </if>
+        <if test="null != nationOne and '' != nationOne">
+            and nation_one = #{nationOne}
+        </if>
+        <if test="null != nationTwo and '' != nationTwo">
+            and nation_two = #{nationTwo}
+        </if>
+
     </select>
 
     <insert id="entryCondition" parameterType="int">
@@ -138,7 +181,8 @@
         nation_two,
         players_two,
         head_coach_two,
-        ninety_minute_results,
+        half_court,
+        concede_count,
         finally_results,
         war_name,
         bj_time,
@@ -156,7 +200,8 @@
             #{match.nationTwo},
             #{match.playersTwo},
             #{match.headCoachTwo},
-            #{match.ninetyMinuteResults},
+            #{match.halfCourt},
+            #{match.concedeCount},
             #{match.finallyResults},
             #{match.warName},
             #{match.bjTime},

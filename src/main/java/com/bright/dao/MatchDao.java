@@ -1,7 +1,6 @@
 package com.bright.dao;
 
 import com.bright.entity.Match;
-import com.bright.req.EntryConditionDto;
 import com.bright.req.EntryFactorReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +28,14 @@ public interface MatchDao {
      * 批量插入
      */
     boolean batchInsert(@Param("matches") List<Match> matches);
+
+    /**
+     * 根据比赛时间和队伍查询
+     * @param bjTime 比赛时间
+     * @param nationOne 主队
+     * @param nationTwo 客队
+     * @return 比赛信息
+     */
+    Match selectByTimeAndTeam(@Param("bjTime")String bjTime, @Param("nationOne")String nationOne,
+                              @Param("nationTwo") String nationTwo);
 }
