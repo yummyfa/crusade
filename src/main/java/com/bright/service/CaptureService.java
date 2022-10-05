@@ -1,6 +1,7 @@
 package com.bright.service;
 
 import com.bright.entity.ResultEntity;
+import com.bright.req.MatchDto;
 
 /**
  * @author wangliang
@@ -8,4 +9,6 @@ import com.bright.entity.ResultEntity;
  */
 public interface CaptureService {
     ResultEntity saveMatchInfo(String match, String level);
+
+    ResultEntity saveResult(MatchDto match);
 }

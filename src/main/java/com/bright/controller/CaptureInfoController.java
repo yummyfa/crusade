@@ -2,6 +2,7 @@ package com.bright.controller;
 
 import com.bright.entity.ResultEntity;
 import com.bright.entity.ResultTemplate;
+import com.bright.req.MatchDto;
 import com.bright.service.CaptureService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -106,5 +107,11 @@ public class CaptureInfoController {
     @ApiOperation("保存比赛信息")
     public ResultEntity getMatchInfo(String match, String level) {
         return captureService.saveMatchInfo(match, level);
+    }
+
+    @PostMapping("/saveResult")
+    @ApiOperation("寻找比赛结果并存入数据库")
+    public ResultEntity saveResult(MatchDto match) {
+        return captureService.saveResult(match);
     }
 }
