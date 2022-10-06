@@ -18,4 +18,7 @@ public interface WarInfoService {
 
     WarInfo getWarInfoByName(String warName);
 
+    WarInfo selectById(Integer warId);
+
+    List<WarInfo> getWarListByCondition(WarInfo warInfo);
 }

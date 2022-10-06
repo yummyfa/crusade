@@ -26,20 +26,24 @@
         war_info
         <set>
             <if test="null != name and '' !=name">
-                name =#{name}
+                name =#{name},
             </if>
             <if test="null != holdTime and '' !=holdTime">
-                hold_time =#{holdTime}
+                hold_time =#{holdTime},
             </if>
             <if test="null != holdCountry and '' !=holdCountry">
-                hold_country =#{holdCountry}
+                hold_country =#{holdCountry},
             </if>
             <if test="null != continent and '' !=continent">
-                continent =#{continent}
+                continent =#{continent},
             </if>
             <if test="null != duration and '' !=duration">
-                duration =#{duration}
+                duration =#{duration},
             </if>
+            <if test="null != url and '' != url">
+                url = #{url},
+            </if>
+            update_time = now()
         </set>
         where
         war_id =#{warId}
@@ -61,8 +65,48 @@
         from
         war_info
         where
-        `name` like concat(concat('%',#{name}),'%')
+        `name` like concat(concat('%',#{warName}),'%')
         and is_del =0
+    </select>
+
+    <select id="selectById" resultMap="WarInfoMap">
+        select
+        war_id, `name`, hold_time, hold_country, continent, duration, is_del, url
+        from
+        war_info
+        where
+        war_id = #{warId}
+    </select>
+
+
+    <select id="getWarListByCondition" resultMap="WarInfoMap">
+        select
+        war_id, `name`, hold_time, hold_country, continent, duration, is_del, url
+        from
+        war_info
+        where
+        1=1
+        <if test="name != null and name != ''">
+            and  `name` = #{name}
+        </if>
+        <if test="holdTime != null and holdTime != ''">
+            and  hold_time = #{holdTime}
+        </if>
+        <if test="holdCountry != null and holdCountry != ''">
+            and  hold_country = #{holdCountry}
+        </if>
+        <if test="continent != null and continent != ''">
+            and  continent = #{continent}
+        </if>
+        <if test="duration != null and duration != ''">
+            and  duration = #{duration}
+        </if>
+        <if test="is_del != null ">
+            and  is_del = #{isDel}
+        </if>
+        <if test="url != null and url != ''">
+            and  url = #{url}
+        </if>
     </select>
 </mapper>
 

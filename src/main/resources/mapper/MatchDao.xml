@@ -39,7 +39,7 @@
         finally_results,
         bj_time,
         war_id,
-        war_name;
+        war_name,
         local_time,
         create_time,
         update_time,
@@ -215,6 +215,5 @@
             0)
         </foreach>
     </insert>
-
 </mapper>
 

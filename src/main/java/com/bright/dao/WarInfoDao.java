@@ -2,6 +2,7 @@ package com.bright.dao;
 
 import com.bright.entity.WarInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,5 +22,9 @@ public interface WarInfoDao {
 
     List<WarInfo> selectAll();
 
-    WarInfo getWarInfoByName(String warName);
+    WarInfo getWarInfoByName(@Param("warName") String warName);
+
+    WarInfo selectById(@Param("warId") Integer warId);
+
+    List<WarInfo> getWarListByCondition(WarInfo warInfo);
 }

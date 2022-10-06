@@ -11,4 +11,7 @@ public interface CaptureService {
     ResultEntity saveMatchInfo(String match, String level);
 
     ResultEntity saveResult(MatchDto match);
+
+    ResultEntity change();
+
 }

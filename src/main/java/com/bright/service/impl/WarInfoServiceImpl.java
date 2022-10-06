@@ -36,4 +36,14 @@ public class WarInfoServiceImpl implements WarInfoService {
     public WarInfo getWarInfoByName(String warName) {
         return warInfoDao.getWarInfoByName(warName);
     }
+
+    @Override
+    public WarInfo selectById(Integer warId) {
+        return warInfoDao.selectById(warId);
+    }
+
+    @Override
+    public List<WarInfo> getWarListByCondition(WarInfo warInfo) {
+        return warInfoDao.getWarListByCondition(warInfo);
+    }
 }

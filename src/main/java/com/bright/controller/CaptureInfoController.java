@@ -15,10 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -104,14 +103,17 @@ public class CaptureInfoController {
     }
 
     @PostMapping("/saveMatchInfo")
-    @ApiOperation("保存比赛信息")
+    @ApiOperation("保存比赛信息（暂时只适用没有打比赛的世界杯）")
     public ResultEntity getMatchInfo(String match, String level) {
         return captureService.saveMatchInfo(match, level);
     }
 
     @PostMapping("/saveResult")
     @ApiOperation("寻找比赛结果并存入数据库")
-    public ResultEntity saveResult(MatchDto match) {
+    public ResultEntity saveResult(@Valid @RequestBody MatchDto match) {
         return captureService.saveResult(match);
     }
+
+    @GetMapping("/change")
+    public ResultEntity change (){return captureService.change();}
 }
