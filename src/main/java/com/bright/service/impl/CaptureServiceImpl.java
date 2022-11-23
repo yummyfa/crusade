@@ -110,7 +110,8 @@ public class CaptureServiceImpl implements CaptureService {
                             // 从第二个开始
                             Elements td = tr.get(i).getElementsByTag("td");
                             Match saveMatch = new Match();
-                            if (td.size() > 7) {
+                            // 判断比赛是否结束
+                            if (td.get(2).childNode(0) != null) {
                                 // 比赛已经结束, 设置时间、主队、客队
                                 setProperties(td, saveMatch);
                                 // 最后比分
@@ -136,6 +137,23 @@ public class CaptureServiceImpl implements CaptureService {
                                 // 插入 match表
                                 matchService.saveMatch(saveMatch);
                                 return ResultTemplate.success("success");
+                            } else {
+                                // 有记录但是没有比分
+                                if (StringUtils.isBlank(match1.getFinallyResults())) {
+                                    match1.setFinallyResults(saveMatch.getFinallyResults());
+                                    match1.setHalfCourt(saveMatch.getHalfCourt());
+                                    // 将结果更新到数据库
+                                    matchService.updateMatch(match1);
+                                } else {
+                                    // 无结果
+                                    boolean matches = match1.getFinallyResults().matches("[0-9]{1,}");
+                                    if (!matches) {
+                                        match1.setFinallyResults(saveMatch.getFinallyResults());
+                                        match1.setHalfCourt(saveMatch.getHalfCourt());
+                                        // 将结果更新到数据库
+                                        matchService.updateMatch(match1);
+                                    }
+                                }
                             }
                         }
                     }
