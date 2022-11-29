@@ -1,8 +1,8 @@
 package com.bright.dao;
 
 import com.bright.entity.ExternalFactor;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 

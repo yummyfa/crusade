@@ -29,6 +29,7 @@ spring:
       max-wait: -1
       min-idle: 1
       filters: stat,wall,slf4j
+# 访问地址：http://localhost:8068/doc.html
 swagger2:
   enable: true
 mybatis:
