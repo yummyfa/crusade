@@ -116,6 +116,7 @@ public class CaptureServiceImpl implements CaptureService {
                                 setProperties(td, saveMatch);
                                 // 最后比分
                                 String finallyResult = td.get(2).childNode(0).toString();
+                                finallyResult = finallyResult.replaceAll(" ", "");
                                 saveMatch.setFinallyResults(finallyResult);
                                 // 半场
                                 String halfCourt = td.get(4).childNode(0).toString();
@@ -146,7 +147,7 @@ public class CaptureServiceImpl implements CaptureService {
                                     matchService.updateMatch(match1);
                                 } else {
                                     // 无结果
-                                    boolean matches = match1.getFinallyResults().matches("[0-9]{1,}");
+                                    boolean matches = judgeNumber(match1.getFinallyResults());
                                     if (!matches) {
                                         match1.setFinallyResults(saveMatch.getFinallyResults());
                                         match1.setHalfCourt(saveMatch.getHalfCourt());
@@ -164,6 +165,20 @@ public class CaptureServiceImpl implements CaptureService {
             }
         }
         return ResultTemplate.fail("未查询到比赛信息");
+    }
+
+    // 判断是否含有数字
+    private boolean judgeNumber(String finallyResults) {
+        char[] chars = finallyResults.toCharArray();
+        char[] numberChar = {'0','1','2','3','4','5','6','7','8','9'};
+        for (char aChar : chars) {
+            for (char c : numberChar) {
+                if (aChar ==c ){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
