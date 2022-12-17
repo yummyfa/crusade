@@ -33,6 +33,8 @@ import java.util.*;
 public class CaptureServiceImpl implements CaptureService {
     private Logger logger = LoggerFactory.getLogger(CaptureServiceImpl.class);
 
+    private static final String WORLD_GROUP = "分组赛";
+
     @Value("${football.url}")
     private String net;
 
@@ -86,19 +88,25 @@ public class CaptureServiceImpl implements CaptureService {
                             fl = fl1.substring(i + 4, i1 - 2);
                         }
                         prefix = fl;
+                        if (!WORLD_GROUP.equals(level)) {
+                            flList.add(prefix);
+                        }
                     }
                 }
-                Elements groupElements = cupElement.getElementsByTag("ul").get(1).getElementsByTag("li");
-                if (groupElements.size() > 1) {
-                    for (int i = 1; i < groupElements.size(); i++) {
-                        String s = groupElements.get(i).toString();
-                        int i1 = s.indexOf("id=");
-                        int i2 = s.indexOf("\">");
-                        String substring = s.substring(i1 + 4, i2);
-                        flList.add(substring);
+                if (WORLD_GROUP.equals(level)) {
+                    // 分组赛获取
+                    Elements groupElements = cupElement.getElementsByTag("ul").get(1).getElementsByTag("li");
+                    if (groupElements.size() > 1) {
+                        for (int i = 1; i < groupElements.size(); i++) {
+                            String s = groupElements.get(i).toString();
+                            int i1 = s.indexOf("id=");
+                            int i2 = s.indexOf("\">");
+                            String substring = s.substring(i1 + 4, i2);
+                            flList.add(substring);
+                        }
+                    } else {
+                        flList.add(prefix);
                     }
-                } else {
-                    flList.add(prefix);
                 }
                 if (!CollectionUtils.isEmpty(flList)) {
                     for (String fl : flList) {
@@ -137,7 +145,6 @@ public class CaptureServiceImpl implements CaptureService {
                                 saveMatch.setWarName(level);
                                 // 插入 match表
                                 matchService.saveMatch(saveMatch);
-                                return ResultTemplate.success("success");
                             } else {
                                 // 有记录但是没有比分
                                 if (StringUtils.isBlank(match1.getFinallyResults())) {
@@ -158,6 +165,7 @@ public class CaptureServiceImpl implements CaptureService {
                             }
                         }
                     }
+                    return ResultTemplate.success("success");
                 }
             } catch (IOException e) {
                 logger.error(e.toString());
