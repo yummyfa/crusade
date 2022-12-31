@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -9,18 +8,18 @@ import java.util.concurrent.CountDownLatch;
  */
 public class BarrierTest {
 
-    private int x ,y;
-    private int a ,b;
+    private int x, y;
+    private int a, b;
 
     @Test
     void test() throws InterruptedException {
-
+        // 指令重排序和屏障方向
         int i = 0;
-        while (true){
+        while (true) {
             x = 0;
-            y=0;
-            a=0;
-            b= 0;
+            y = 0;
+            a = 0;
+            b = 0;
             CountDownLatch countDownLatch = new CountDownLatch(2);
             i++;
             Thread thread1 = new Thread(new Runnable() {
@@ -43,23 +42,10 @@ public class BarrierTest {
             thread1.start();
             thread2.start();
             countDownLatch.await();
-            if (x == 0 && y ==0) {
-                System.out.println("第" + i +"次， x和y的值都为0");
+            if (x == 0 && y == 0) {
+                System.out.println("第" + i + "次， x和y的值都为0");
                 break;
             }
         }
-    }
-
-    @Test
-    void get(){
-        ArrayList<String> objects = new ArrayList<>();
-        objects.add("1");
-        objects.add("2");
-        objects.remove("1");
-        System.out.println(objects);
-    }
-
-    private static synchronized void get1(){
-
     }
 }
