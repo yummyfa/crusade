@@ -1,15 +1,17 @@
 package com.bright.controller;
 
 import com.bright.entity.Company;
+import com.bright.entity.ResultEntity;
 import com.bright.service.CompanyService;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageRequest;
 
 /**
  * (Company)表控制层
@@ -88,12 +90,13 @@ public class CompanyController {
 
     /**
      * 根据条件查询
+     * @return
      */
     @GetMapping("/selectByCompany")
     @ApiOperation("查询所有的信息")
-    public ResponseEntity<Company> selectByCompany(@RequestParam("companyName") String companyName,
-                                                   @RequestParam("companyId") Integer companyId) {
-        return ResponseEntity.ok(this.companyService.selectByCompany(companyName,companyId));
+    public ResultEntity<Company> selectByCompany(@RequestParam("companyName") String companyName,
+                                                               @RequestParam("companyId") Integer companyId) {
+        return this.companyService.selectByCompany(companyName,companyId);
     }
 }
 

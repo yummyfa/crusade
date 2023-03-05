@@ -1,6 +1,7 @@
 package com.bright.service;
 
 import com.bright.entity.Company;
+import com.bright.entity.ResultEntity;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 
@@ -53,5 +54,5 @@ public interface CompanyService {
      */
     boolean deleteById(Integer companyId);
 
-    Company selectByCompany(String companyName, Integer companyId);
+    ResultEntity<Company> selectByCompany(String companyName, Integer companyId);
 }

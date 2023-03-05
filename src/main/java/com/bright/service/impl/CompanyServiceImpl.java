@@ -2,6 +2,8 @@ package com.bright.service.impl;
 
 import com.bright.entity.Company;
 import com.bright.dao.CompanyDao;
+import com.bright.entity.ResultEntity;
+import com.bright.entity.ResultTemplate;
 import com.bright.service.CompanyService;
 import org.springframework.stereotype.Service;
 //import org.springframework.data.domain.Page;
@@ -81,7 +83,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company selectByCompany(String companyName, Integer companyId) {
-        return this.companyDao.selectByCompany(companyName,companyId);
+    public ResultEntity<Company> selectByCompany(String companyName, Integer companyId) {
+        Company company = this.companyDao.selectByCompany(companyName, companyId);
+        return ResultTemplate.successData(company, "查询成功");
     }
 }
